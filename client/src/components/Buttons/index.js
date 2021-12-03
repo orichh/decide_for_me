@@ -1,11 +1,12 @@
 import React from 'react';
+import Button from '@mui/material/Button';
 
-const Button = () => {
+const AddButton = () => {
   return (
     <div style={{ display: 'flex' }}>
-      <button>Button</button>
+      <Button variant="outlined">Contained</Button>
     </div>
   );
 };
 
-export default Button;
+export default AddButton;
