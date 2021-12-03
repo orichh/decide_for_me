@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from '@components/Buttons';
-
+{
+  /* <Typography variant="h1" />; */
+}
 const AddDecision = () => {
   return (
     <div style={{ display: 'flex' }}>
