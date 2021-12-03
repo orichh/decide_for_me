@@ -1,0 +1,26 @@
+{
+  "name": "decide_for_me",
+  "version": "1.0.0",
+  "description": "repo for decide_for_me app",
+  "main": "config.example.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^27.4.3",
+    "jest-puppeteer": "^6.0.2",
+    "puppeteer": "^12.0.1",
+    "supertest": "^6.1.6"
+  },
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richardhyesungo/decide_for_me.git"
+  },
+  "author": "richard o",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/richardhyesungo/decide_for_me/issues"
+  },
+  "homepage": "https://github.com/richardhyesungo/decide_for_me#readme"
+}

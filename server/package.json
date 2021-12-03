@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server for decide_for_me app",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richardhyesungo/decide_for_me.git"
+  },
+  "author": "richard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/richardhyesungo/decide_for_me/issues"
+  },
+  "homepage": "https://github.com/richardhyesungo/decide_for_me#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.14",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {}
+}
