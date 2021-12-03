@@ -1,7 +1,6 @@
 import React from 'react';
-// import Test from '@components/index.js'
 
-const Test = () => {
+const Header = () => {
   return (
     <div style={{ display: 'flex' }}>
       <h1>decide for me pls</h1>
@@ -9,4 +8,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Header;

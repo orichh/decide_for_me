@@ -12,5 +12,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, (err) => {
-  console.log(err ? err : `Server listening on ${PORT}`);
+  console.log(err ? err : `Client server listening on ${PORT}`);
 });
