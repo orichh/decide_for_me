@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "repo for decide_for_me app",
   "main": "config.example.js",
-  "dependencies": {},
+  "dependencies": {
+    "@mui/material": "^5.2.2",
+    "@mui/styled-engine-sc": "^5.1.0",
+    "styled-components": "^5.3.3"
+  },
   "devDependencies": {
     "jest": "^27.4.3",
     "jest-puppeteer": "^6.0.2",
