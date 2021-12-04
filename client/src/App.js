@@ -7,13 +7,14 @@ import PastDecisions from '@components/PastDecisions';
 
 const App = () => {
   const [state, setState] = useState({
-    voteStarted: false,
-    timer: 15,
     userName: '',
     decisionToMake: '',
+    voteStarted: false,
     voteSubmitted: false,
-    numChoices: 10,
     choices: ['', '', '', '', '', '', '', '', ''],
+    voteStartTime: 0,
+    voteEndTime: 0,
+    timer: 15,
   });
 
   useEffect(() => {
