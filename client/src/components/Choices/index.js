@@ -46,12 +46,21 @@ const Choices = ({ state, setState }) => {
             ? state.choices.map((element, index, collection) => {
                 return (
                   <TextField
-                    disabled={false} // do a conditional here
+                    required={index <= 1 ? true : false}
+                    disabled={
+                      index === 0 || state.choices[index - 1] !== ''
+                        ? false
+                        : true
+                    }
                     sx={{
                       display: 'flex',
                       padding: '0%',
                       margin: '.5%',
                       cursor: 'pointer',
+                      visibility:
+                        index === 0 || state.choices[index - 1] !== ''
+                          ? 'visible'
+                          : 'hidden',
                     }}
                     id={`${index}`}
                     label={`Choice #${index + 1}`}
