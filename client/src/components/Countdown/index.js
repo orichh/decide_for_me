@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Countdown = () => {
+const Countdown = ({ state }) => {
   return (
     <div style={{ display: 'flex' }}>
-      <h1>Countdown</h1>
+      <h1>Countdown: 00:{state.timer}</h1>
     </div>
   );
 };
