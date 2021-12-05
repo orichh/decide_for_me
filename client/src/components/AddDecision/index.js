@@ -20,8 +20,8 @@ const AddDecision = ({ state, setState }) => {
   };
   return (
     <>
-      {state.voteStarted === true ? (
-        <div>vote started</div>
+      {state.voteEnded === false ? (
+        <div></div>
       ) : (
         <div
           style={{

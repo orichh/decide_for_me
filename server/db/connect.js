@@ -15,10 +15,11 @@ const decisionSchema = new mongoose.Schema({
   userName: String,
   decisionToMake: String,
   voteEnded: Boolean,
-  choices: Object,
+  choices: Array,
   voteStartTime: Date,
   voteEndTime: Date,
   timer: Number,
+  topChoice: Object,
 });
 
 const Decision = mongoose.model('Decisions', decisionSchema);

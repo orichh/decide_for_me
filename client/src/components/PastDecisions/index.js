@@ -1,12 +1,12 @@
 import React from 'react';
 
-const PastDecisions = ({ state, setState }) => {
+const PastDecisions = ({ previousDecisions, setPreviousDecisions }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h1>Past Decisions</h1>
-      {state.previousDecisions.map((element, index, collection) => {
+      {previousDecisions.reverse().map((element, index, collection) => {
         return (
-          <div>
+          <div key={index}>
             User Name: {element.userName}
             <br />
             User Decision: {element.decisionToMake}
@@ -20,9 +20,8 @@ const PastDecisions = ({ state, setState }) => {
             <div>
               Available Choices:
               {Object.keys(element.choices).map((ele, index, collection) => {
-                console.log(element.choices);
                 return (
-                  <div>
+                  <div key={index}>
                     {element.choices[ele].choiceText}:{' '}
                     {element.choices[ele].numVotes}
                   </div>

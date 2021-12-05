@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import { addDecisionStartVote } from '@api';
 
 const AddButton = ({ state, setState }) => {
   const buttonClick = (e) => {
@@ -18,10 +19,17 @@ const AddButton = ({ state, setState }) => {
 export const StartVote = ({ state, setState }) => {
   const buttonClick = (e) => {
     e.preventDefault();
-    console.log(state);
-    state.userName === '' || state.decisionToMake === ''
-      ? alert('add a name and decision to make')
-      : setState({ ...state, voteStarted: true });
+    if (state.userName === '' || state.decisionToMake === '') {
+      alert('add a name and decision to make');
+    } else if (
+      state.choices[0].choiceText === '' ||
+      state.choices[1].choiceText === ''
+    ) {
+      alert('write in at least two choices');
+    } else {
+      setState({ ...state, voteEnded: false });
+      addDecisionStartVote(state);
+    }
   };
   return (
     <div style={{ display: 'flex' }}>
