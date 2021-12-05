@@ -4,6 +4,7 @@ import Footer from '@components/Footer';
 import AddDecision from '@components/AddDecision';
 import Choices from '@components/Choices';
 import PastDecisions from '@components/PastDecisions';
+import getPreviousDecisions from './api';
 
 const App = () => {
   const [state, setState] = useState({
@@ -12,12 +13,21 @@ const App = () => {
     voteStarted: false,
     voteSubmitted: false,
     choices: ['', '', '', '', '', '', '', '', ''],
+    previousDecisions: [],
     voteStartTime: 0,
     voteEndTime: 0,
     timer: 15,
+    topChoice: '',
   });
 
-  useEffect(() => {
+  useEffect(async () => {
+    console.log('state changed', state);
+    const { data } = await getPreviousDecisions();
+    console.log('', data);
+    setState({ ...state, previousDecisions: data });
+  }, []);
+
+  useEffect(async () => {
     console.log('state changed', state);
   }, [state]);
 
@@ -26,7 +36,7 @@ const App = () => {
       <Title />
       <AddDecision state={state} setState={setState} />
       <Choices state={state} setState={setState} />
-      <PastDecisions />
+      <PastDecisions state={state} setState={setState} />
       <Footer />
     </>
   );

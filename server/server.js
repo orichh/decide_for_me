@@ -5,8 +5,22 @@ const PORT = process.env.PORT || 3002;
 
 const app = express();
 
-app.use(express.static(path.resolve(__dirname, './dist')));
+// controller functions
+const { getAllDecisions, getLatestDecision } = require('./db/controllers.js');
 
+// middleware
+
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+app.use(express.json());
+app.use(require('body-parser').urlencoded({ extended: false }));
+
+// routes
 app.get('/', (req, res) => {
   res
     .status(200)
@@ -16,7 +30,25 @@ app.get('/', (req, res) => {
 });
 
 app.get('/decisions', (req, res) => {
-  res.status(200).send('ok');
+  getAllDecisions()
+    .then((results) => {
+      res.status(200).send(results);
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send('something went wrong with getting all the decisions');
+    });
+});
+
+app.get('/decision', (req, res) => {
+  decisions
+    .then((results) => {
+      res.status(200).send(results);
+    })
+    .catch((err) => {
+      res.status(500).send('something went wrong getting the decisions', err);
+    });
 });
 
 app.post('/decision', (req, res) => {
