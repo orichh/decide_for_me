@@ -10,6 +10,27 @@ import {
   updateLatestDecisionVoteEnded,
 } from '@api';
 
+// default state
+const defaultState = {
+  userName: '',
+  decisionToMake: '',
+  voteEnded: true,
+  choices: [
+    { choiceText: '', numVotes: 0 },
+    { choiceText: '', numVotes: 0 },
+    { choiceText: '', numVotes: 0 },
+    { choiceText: '', numVotes: 0 },
+    { choiceText: '', numVotes: 0 },
+    { choiceText: '', numVotes: 0 },
+    { choiceText: '', numVotes: 0 },
+    { choiceText: '', numVotes: 0 },
+    { choiceText: '', numVotes: 0 },
+  ],
+  voteStartTime: 0,
+  voteEndTime: 0,
+  timer: 15,
+};
+
 const App = () => {
   // calculate remaining time
   const calculateRemainingTime = () => {
@@ -42,28 +63,30 @@ const App = () => {
     voteStartTime: 0,
     voteEndTime: 0,
     timer: 15,
-    topChoice: {},
   });
   const [previousDecisions, setPreviousDecisions] = useState([]);
   const [remainingTime, setRemainingTime] = useState(calculateRemainingTime());
+  const [finalChoice, setFinalChoice] = useState({});
 
   // Listens for any changes to state and initializes if there's an ongoing vote
   useEffect(async () => {
-    console.log(state);
     const { data } = await getLatestDecision();
-    console.log(data);
     if (data[0].voteEnded === false) {
-      console.log('changing to latest state');
       setState(data[0]);
-      // setState((prevState) => {
-      //   return { ...prevState, ...data[0] };
-      // });
     }
   }, []);
 
   // logs the previous decisions
   useEffect(async () => {
     const { data } = await getPreviousDecisions();
+    console.log(data[0]._id);
+    if (
+      previousDecisions.length === 0 ||
+      previousDecisions[0]._id !== data[0]._id
+    ) {
+      setPreviousDecisions(data);
+      console.log('previous decisions', previousDecisions);
+    }
   }, []);
 
   // initializes remaining time if there's an ongoing vote
@@ -83,11 +106,9 @@ const App = () => {
           setRemainingTime(time);
         }
       }, 1000);
-    } else if (remainingTime < 0) {
-      // setState({ ...state, voteEnded: true });
-      // API PUT request here to modify the latest record
+    } else if (remainingTime <= 0) {
       updateLatestDecisionVoteEnded(state._id);
-      setState({ ...state, voteEnded: true });
+      setState(defaultState);
     }
     // }, []);
   }, [remainingTime]);
@@ -105,7 +126,7 @@ const App = () => {
         previousDecisions={previousDecisions}
         setPreviousDecisions={setState}
       />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

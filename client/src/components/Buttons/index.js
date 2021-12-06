@@ -29,7 +29,8 @@ export const StartVote = ({ state, setState }) => {
     } else {
       // setState({ ...state, voteEnded: false });
       addDecisionStartVote(state).then((s) => {
-        console.log(s.data);
+        console.log('finished sending request 🛳🛳🛳🛳🛳🛳🛳', s);
+        setState(s.data);
       });
     }
   };

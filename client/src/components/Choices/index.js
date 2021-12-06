@@ -29,7 +29,7 @@ const Choices = ({ state, setState, remainingTime }) => {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>{state.userName} needs help making a decision</h2>
         <h2>{state.decisionToMake}</h2>
-        <Countdown remainingTime={remainingTime} />
+        <Countdown remainingTime={remainingTime} state={state} />
         {state.voteEnded === false ? (
           <SubmitVote
             state={state}
