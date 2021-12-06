@@ -18,4 +18,17 @@ const addDecisionStartVote = (state) => {
   });
 };
 
-export { getPreviousDecisions, getLatestDecision, addDecisionStartVote };
+const updateLatestDecisionVoteEnded = (_id) => {
+  return localhost({
+    method: 'PUT',
+    url: '/decision',
+    params: { _id },
+  });
+};
+
+export {
+  getPreviousDecisions,
+  getLatestDecision,
+  addDecisionStartVote,
+  updateLatestDecisionVoteEnded,
+};

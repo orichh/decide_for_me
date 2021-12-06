@@ -10,6 +10,7 @@ const {
   getAllDecisions,
   getLatestDecision,
   addNewDecision,
+  updateLatestDecisionVoteEnded,
 } = require('./db/controllers.js');
 
 // middleware
@@ -67,19 +68,26 @@ app.post('/decision', (req, res) => {
   // add function will send query to mongodb
   console.log(req.query);
   let decisionState = req.query;
-  let voteStartTime = new Date();
-  let voteEndTime = new Date();
-  voteEndTime.setSeconds(voteEndTime.getSeconds() + req.query.timer);
 
-  decisionState.voteStartTime = voteStartTime;
-  decisionState.voteEndTime = voteEndTime;
-
-  console.log((voteEndTime - voteStartTime) / 1000);
-  console.log(decisionState);
-
-  const timeDifference = (voteEndTime - voteStartTime) / 1000;
-
+  decisionState.voteStartTime = new Date();
+  decisionState.voteEndTime = new Date(
+    new Date().setSeconds(new Date().getSeconds() + parseInt(req.query.timer))
+  );
+  decisionState.voteEnded = false;
+  console.log('state with changes 🚁🚁🚁🚁🚁🚁🚁', decisionState);
+  // res.sendStatus(200);
   addNewDecision(decisionState)
+    .then((results) => {
+      res.status(200).send(results);
+    })
+    .catch((err) => {
+      res.status(500).send('something went wrong adding the decision', err);
+    });
+});
+
+// update a decision's voteEnded prop to true after counter is complete
+app.put('/decision', (req, res) => {
+  updateLatestDecisionVoteEnded(req.query._id)
     .then((results) => {
       res.status(200).send(results);
     })

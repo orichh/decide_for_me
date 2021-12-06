@@ -27,8 +27,10 @@ export const StartVote = ({ state, setState }) => {
     ) {
       alert('write in at least two choices');
     } else {
-      setState({ ...state, voteEnded: false });
-      addDecisionStartVote(state);
+      // setState({ ...state, voteEnded: false });
+      addDecisionStartVote(state).then((s) => {
+        console.log(s.data);
+      });
     }
   };
   return (

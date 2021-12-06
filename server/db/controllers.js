@@ -38,6 +38,9 @@ module.exports = {
     const newDecision = new decision(decisionState);
     return newDecision.save();
   },
+  updateLatestDecisionVoteEnded: (_id) => {
+    return decision.updateOne({ _id: _id }, { $set: { voteEnded: true } });
+  },
 };
 
 // const richardDecisions = decision.find({ userName: /^richard/ });
