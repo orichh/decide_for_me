@@ -41,10 +41,12 @@ module.exports = {
   updateLatestDecisionVoteEnded: (_id) => {
     return decision.updateOne({ _id: _id }, { $set: { voteEnded: true } });
   },
+  incrementVoteForChoice: (_id, index) => {
+    const insertString = `choices.${index}.numVotes`;
+    const queryObject = { $inc: { [insertString]: 1 } };
+    return decision.updateOne({ _id: _id }, queryObject);
+  },
 };
-
-// const richardDecisions = decision.find({ userName: /^richard/ });
-// console.log(richardDecisions);
 
 /*
   sample insertion

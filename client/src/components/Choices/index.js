@@ -19,7 +19,11 @@ const Choices = ({ state, setState, remainingTime }) => {
   // allows other users to select a choice
   const selectChoice = (event) => {
     event.preventDefault();
+    // setSelectedChoice(event.target.id);
+    // console.log(event.target.innerText);
+    setState({ ...state, voteSelection: event.target.id });
   };
+  console.log('state in choices', state);
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -27,7 +31,11 @@ const Choices = ({ state, setState, remainingTime }) => {
         <h2>{state.decisionToMake}</h2>
         <Countdown remainingTime={remainingTime} />
         {state.voteEnded === false ? (
-          <SubmitVote state={state} setState={setState} />
+          <SubmitVote
+            state={state}
+            setState={setState}
+            selectedChoice={selectedChoice}
+          />
         ) : (
           <StartVote state={state} setState={setState} />
         )}
@@ -95,7 +103,7 @@ const Choices = ({ state, setState, remainingTime }) => {
                     }}
                     id={index}
                     key={index}
-                    onClick={() => console.log('choice clicked')}
+                    onClick={selectChoice}
                   >
                     {element.choiceText}
                   </div>

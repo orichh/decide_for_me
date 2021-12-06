@@ -11,6 +11,7 @@ const {
   getLatestDecision,
   addNewDecision,
   updateLatestDecisionVoteEnded,
+  incrementVoteForChoice,
 } = require('./db/controllers.js');
 
 // middleware
@@ -66,13 +67,15 @@ app.post('/decision', (req, res) => {
   // need to add voteEndTime and voteStartTime to the state object
   // send that new object to the add function
   // add function will send query to mongodb
-  console.log(req.query);
-  let decisionState = req.query;
+  // console.log(req.query);
+  let decisionState = req.body;
+  console.log(req.body);
 
   decisionState.voteStartTime = new Date();
   decisionState.voteEndTime = new Date(
-    new Date().setSeconds(new Date().getSeconds() + parseInt(req.query.timer))
+    new Date().setSeconds(new Date().getSeconds() + parseInt(req.body.timer))
   );
+  console.log(decisionState.voteEndTime);
   decisionState.voteEnded = false;
   console.log('state with changes 🚁🚁🚁🚁🚁🚁🚁', decisionState);
   // res.sendStatus(200);
@@ -87,13 +90,25 @@ app.post('/decision', (req, res) => {
 
 // update a decision's voteEnded prop to true after counter is complete
 app.put('/decision', (req, res) => {
-  updateLatestDecisionVoteEnded(req.query._id)
+  updateLatestDecisionVoteEnded(req.query._id, req.query.choiceText)
     .then((results) => {
       res.status(200).send(results);
     })
     .catch((err) => {
       res.status(500).send('something went wrong adding the decision', err);
     });
+});
+
+app.put('/vote', (req, res) => {
+  console.log(`${req.query._id} ${req.query.voteSelection}`);
+  incrementVoteForChoice(req.query._id, req.query.voteSelection)
+    .then((results) => {
+      res.status(200).send(results);
+    })
+    .catch((err) => {
+      res.status(500).send('something went wrong adding the decision', err);
+    });
+  // res.status(200).send(`${req.query._id} ${req.query.voteSelection}`);
 });
 
 /*

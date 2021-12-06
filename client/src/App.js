@@ -8,18 +8,15 @@ import {
   getPreviousDecisions,
   getLatestDecision,
   updateLatestDecisionVoteEnded,
-} from './api';
+} from '@api';
 
 const App = () => {
   // calculate remaining time
   const calculateRemainingTime = () => {
-    console.log('vote end time', state.voteEndTime);
-    console.log('current time', new Date());
     if (state.voteEnded === false) {
       const difference = Math.floor(
         (new Date(state.voteEndTime) - new Date()) / 1_000
       );
-      console.log('difference', difference);
       return difference;
     } else {
       return 0;
@@ -52,20 +49,21 @@ const App = () => {
 
   // Listens for any changes to state and initializes if there's an ongoing vote
   useEffect(async () => {
+    console.log(state);
     const { data } = await getLatestDecision();
+    console.log(data);
     if (data[0].voteEnded === false) {
       console.log('changing to latest state');
-      setState((prevState) => {
-        return { ...prevState, ...data[0] };
-      });
+      setState(data[0]);
+      // setState((prevState) => {
+      //   return { ...prevState, ...data[0] };
+      // });
     }
   }, []);
 
   // logs the previous decisions
   useEffect(async () => {
-    console.log('state changed previous data');
     const { data } = await getPreviousDecisions();
-    console.log('', data);
   }, []);
 
   // initializes remaining time if there's an ongoing vote
@@ -78,7 +76,6 @@ const App = () => {
 
   // countdown logic
   useEffect(async () => {
-    console.log('remaining time', remainingTime);
     if (state.voteEnded === false && remainingTime > 0) {
       setTimeout(() => {
         let time = calculateRemainingTime();

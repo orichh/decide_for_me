@@ -14,7 +14,7 @@ const addDecisionStartVote = (state) => {
   return localhost({
     method: 'POST',
     url: '/decision',
-    params: state,
+    data: state,
   });
 };
 
@@ -26,9 +26,18 @@ const updateLatestDecisionVoteEnded = (_id) => {
   });
 };
 
+const submitVoteApiRequest = (_id, voteSelection) => {
+  return localhost({
+    method: 'PUT',
+    url: '/vote',
+    params: { _id, voteSelection },
+  });
+};
+
 export {
   getPreviousDecisions,
   getLatestDecision,
   addDecisionStartVote,
   updateLatestDecisionVoteEnded,
+  submitVoteApiRequest,
 };
