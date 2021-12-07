@@ -1,25 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Countdown from '@components/Countdown';
 import { StartVote, SubmitVote } from '@components/Buttons';
 import TextField from '@mui/material/TextField';
 
-const Choices = ({ state, setState }) => {
+const Choices = ({ state, setState, remainingTime }) => {
+  const [selectedChoice, setSelectedChoice] = useState(0);
+
+  // allows user to add choices for their decision
   const addChoice = (event) => {
     event.preventDefault();
     const index = event.target.id;
     let newArr = [...state.choices];
-    newArr[index] = event.target.value;
+    newArr[index] = { choiceText: event.target.value, numVotes: 0 };
     setState({ ...state, choices: newArr });
     console.log(event.target.id);
   };
+
+  // allows other users to select a choice
+  const selectChoice = (event) => {
+    event.preventDefault();
+    // setSelectedChoice(event.target.id);
+    // console.log(event.target.innerText);
+    setState({ ...state, voteSelection: event.target.id });
+  };
+  console.log('state in choices', state);
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <h2>{state.userName} needs help making a decision</h2>
         <h2>{state.decisionToMake}</h2>
-        <Countdown state={state} setState={setState} />
-        {state.voteStarted === true ? (
-          <SubmitVote state={state} setState={setState} />
+        <Countdown remainingTime={remainingTime} state={state} />
+        {state.voteEnded === false ? (
+          <SubmitVote
+            state={state}
+            setState={setState}
+            selectedChoice={selectedChoice}
+          />
         ) : (
           <StartVote state={state} setState={setState} />
         )}
@@ -42,13 +58,13 @@ const Choices = ({ state, setState }) => {
             justifyContent: 'space-between',
           }}
         >
-          {state.voteStarted === false
+          {state.voteEnded === true
             ? state.choices.map((element, index, collection) => {
                 return (
                   <TextField
                     required={index <= 1 ? true : false}
                     disabled={
-                      index === 0 || state.choices[index - 1] !== ''
+                      index === 0 || state.choices[index - 1].choiceText !== ''
                         ? false
                         : true
                     }
@@ -58,7 +74,8 @@ const Choices = ({ state, setState }) => {
                       margin: '.5%',
                       cursor: 'pointer',
                       visibility:
-                        index === 0 || state.choices[index - 1] !== ''
+                        index === 0 ||
+                        state.choices[index - 1].choiceText !== ''
                           ? 'visible'
                           : 'hidden',
                     }}
@@ -74,7 +91,7 @@ const Choices = ({ state, setState }) => {
                 );
               })
             : state.choices.map((element, index, collection) => {
-                return element !== '' ? (
+                return element.choiceText !== '' ? (
                   <div
                     style={{
                       display: 'flex',
@@ -84,8 +101,11 @@ const Choices = ({ state, setState }) => {
                       borderRadius: '4px',
                       border: '1px solid black',
                     }}
+                    id={index}
+                    key={index}
+                    onClick={selectChoice}
                   >
-                    {element}
+                    {element.choiceText}
                   </div>
                 ) : null;
               })}

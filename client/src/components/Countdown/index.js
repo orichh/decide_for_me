@@ -1,9 +1,13 @@
 import React from 'react';
 
-const Countdown = ({ state }) => {
+const Countdown = ({ state, remainingTime }) => {
   return (
     <div style={{ display: 'flex' }}>
-      <h1>Countdown: 00:{state.timer}</h1>
+      {state.voteEnded === true ? (
+        <h1>Countdown: {state.timer}</h1>
+      ) : (
+        <h1>Countdown: {remainingTime}</h1>
+      )}
     </div>
   );
 };
