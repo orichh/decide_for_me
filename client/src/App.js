@@ -80,10 +80,7 @@ const App = () => {
   useEffect(async () => {
     const { data } = await getPreviousDecisions();
     console.log(data[0]._id);
-    if (
-      previousDecisions.length === 0 ||
-      previousDecisions[0]._id !== data[0]._id
-    ) {
+    if (previousDecisions.length === 0) {
       setPreviousDecisions(data);
       console.log('previous decisions', previousDecisions);
     }
@@ -107,8 +104,47 @@ const App = () => {
         }
       }, 1000);
     } else if (remainingTime <= 0) {
+      // let { data } = await getLatestDecision();
+      // console.log('latest decision', data[0]);
+      if (state.voteEnded === false) {
+        let highestVoted = -1;
+        let results = [];
+        let { data } = await getLatestDecision();
+        console.log('previous data', data);
+        // goes through each of the choices finds the highest voted
+        for (let i = 0; i < data[0].choices.length; i++) {
+          console.log('checking votes', data[0].choices[i].choiceText);
+          if (data[0].choices[i].numVotes > highestVoted) {
+            highestVoted = data[0].choices[i].numVotes;
+          }
+        }
+        // goes through and adds all choice votes equal to highest voted
+        for (let i = 0; i < data[0].choices.length; i++) {
+          if (
+            data[0].choices[i].numVotes === highestVoted &&
+            data[0].choices[i].choiceText !== ''
+          ) {
+            results.push(data[0].choices[i]);
+          }
+        }
+        console.log('results', results);
+        // a tie
+        if (results.length > 1) {
+          function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+          }
+          let winner = results[getRandomInt(results.length)];
+          alert(
+            `there was a tie, so we picked a random winner -> ${winner.choiceText}`
+          );
+        } else {
+          alert(results[0].choiceText);
+        }
+      }
       updateLatestDecisionVoteEnded(state._id);
       setState(defaultState);
+      let { data } = await getPreviousDecisions();
+      setPreviousDecisions(data);
     }
     // }, []);
   }, [remainingTime]);

@@ -65,6 +65,7 @@ const AddDecision = ({ state, setState }) => {
                 // value="test"
                 onChange={updateUserName}
                 sx={{ width: '60%', alignSelf: 'center' }}
+                inputProps={{ maxLength: 50 }}
               />
               <TextField
                 id="outlined-select-timer"
@@ -72,7 +73,7 @@ const AddDecision = ({ state, setState }) => {
                 value={state.timer}
                 onChange={setTimer}
                 helperText="set timer"
-                sx={{ width: '15%' }}
+                sx={{ width: '20%' }}
               >
                 {timerOptions.map((one, two) => (
                   <MenuItem key={one.value} value={one.value}>
@@ -91,6 +92,7 @@ const AddDecision = ({ state, setState }) => {
               helperText="what's a decision you need to make?"
               onChange={updateDecisionToMake}
               sx={{ alignSelf: 'center', width: '50%' }}
+              inputProps={{ maxLength: 100 }}
             />
           </div>
         </div>

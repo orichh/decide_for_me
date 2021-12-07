@@ -3,11 +3,16 @@ import React from 'react';
 const PastDecisions = React.memo(
   ({ previousDecisions, setPreviousDecisions }) => {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <h1>Past Decisions</h1>
         {previousDecisions.reverse().map((element, index, collection) => {
           return (
-            <div key={index}>
+            <div key={index} style={{ border: '1px solid black' }}>
               User Name: {element.userName}
               <br />
               User Decision: {element.decisionToMake}
@@ -19,7 +24,7 @@ const PastDecisions = React.memo(
               Vote End Time: {element.voteEndTime}
               <br />
               <div>
-                Choices and Their Votes:
+                Results:
                 {Object.keys(element.choices).map((ele, index, collection) => {
                   return (
                     <>

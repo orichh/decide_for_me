@@ -19,16 +19,18 @@ const Choices = ({ state, setState, remainingTime }) => {
   // allows other users to select a choice
   const selectChoice = (event) => {
     event.preventDefault();
-    // setSelectedChoice(event.target.id);
-    // console.log(event.target.innerText);
     setState({ ...state, voteSelection: event.target.id });
   };
   console.log('state in choices', state);
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <h2>{state.userName} needs help making a decision</h2>
-        <h2>{state.decisionToMake}</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '40%' }}>
+        {state.userName !== '' ? (
+          <p>{state.userName} needs help making a decision</p>
+        ) : (
+          <p>add your name</p>
+        )}
+        {state.decisionToMake !== '' ? <p>{state.decisionToMake}</p> : <p></p>}
         <Countdown remainingTime={remainingTime} state={state} />
         {state.voteEnded === false ? (
           <SubmitVote
@@ -45,7 +47,7 @@ const Choices = ({ state, setState, remainingTime }) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          width: '90%',
+          width: '60%',
         }}
       >
         <h1>Choices</h1>
@@ -55,7 +57,7 @@ const Choices = ({ state, setState, remainingTime }) => {
             flexDirection: 'row',
             flexWrap: 'wrap',
             width: '90%',
-            justifyContent: 'space-between',
+            justifyContent: 'space-evenly',
           }}
         >
           {state.voteEnded === true
@@ -85,6 +87,7 @@ const Choices = ({ state, setState, remainingTime }) => {
                     variant="standard"
                     onChange={addChoice}
                     key={index}
+                    inputProps={{ maxLength: 50 }}
                   >
                     {element}
                   </TextField>

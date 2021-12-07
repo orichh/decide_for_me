@@ -46,15 +46,14 @@ export const StartVote = ({ state, setState }) => {
 export const SubmitVote = ({ state, setState }) => {
   const submitVoteClick = (e) => {
     e.preventDefault();
-    console.log('clicked');
     if (state.voteSubmitted === undefined) {
       setState({ ...state, voteSubmitted: true });
-      // // api call here to increment vote for selected option
-      console.log(
-        ' buttons/index.js vote submitted 🎢🎢🎢🎢🎢🎢🎢🎢🎢🎢🎢🎢🎢🎢🎢🎢'
-      );
       submitVoteApiRequest(state._id, state.voteSelection);
-      alert(`vote submitted ${state.voteSelection}`);
+      alert(
+        `Vote received! You voted for ${
+          state.choices[state.voteSelection].choiceText
+        }`
+      );
     } else {
       alert('you voted already');
     }
