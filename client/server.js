@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -12,5 +12,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, (err) => {
-  console.log(err ? err : `Server listening on ${PORT}`);
+  console.log(err ? err : `Client server listening on ${PORT}`);
 });
