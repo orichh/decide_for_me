@@ -1,34 +1,9 @@
 // functions using the mongoose connection here
 const decision = require('./connect.js');
 
-// const test = new decision({
-//   userName: 'richard',
-//   decisionToMake: 'movie to watch',
-//   voteEnded: true,
-//   choices: [
-//     {
-//       choiceText: 'indiana jones',
-//       numVotes: 2,
-//     },
-//     {
-//       choiceText: 'jurassic park',
-//       numVotes: 5,
-//     },
-//   ],
-//   voteStartTime: '2021-05-18T16:00:00Z',
-//   voteEndTime: '2021-05-18T16:00:00Z',
-//   timer: 15,
-//   topChoice: {
-//     choiceText: 'jurassic park',
-//     numVotes: 5,
-//   },
-// });
-
-// test.save();
-
 module.exports = {
   getAllDecisions: () => {
-    return decision.find({}).limit(5);
+    return decision.find({}).sort({ _id: -1 }).limit(5);
   },
 
   getLatestDecision: () => {

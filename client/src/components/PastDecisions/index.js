@@ -10,7 +10,7 @@ const PastDecisions = React.memo(
         }}
       >
         <h1>Past Decisions</h1>
-        {previousDecisions.reverse().map((element, index, collection) => {
+        {previousDecisions.map((element, index, collection) => {
           return (
             <div key={index} style={{ border: '1px solid black' }}>
               User Name: {element.userName}
