@@ -63,11 +63,6 @@ app.get('/decision', (req, res) => {
 
 // add a decision
 app.post('/decision', (req, res) => {
-  // receive state from client
-  // need to add voteEndTime and voteStartTime to the state object
-  // send that new object to the add function
-  // add function will send query to mongodb
-  // console.log(req.query);
   let decisionState = req.body;
   console.log(req.body);
 
@@ -108,22 +103,7 @@ app.put('/vote', (req, res) => {
     .catch((err) => {
       res.status(500).send('something went wrong adding the decision', err);
     });
-  // res.status(200).send(`${req.query._id} ${req.query.voteSelection}`);
 });
-
-/*
-  TODO: DELETE ME
-  userName: 'richard',
-  decisionToMake: 'test',
-  voteEnded: false,
-  choices: [
-    { choiceText: 'something', numVotes: 2 },
-    { choiceText: 'something else', numVotes: 5 }
-  ],
-  voteStartTime: ISODate("2021-05-18T16:00:00.000Z"),
-  voteEndTime: ISODate("2021-05-18T16:00:00.000Z"),
-  timer: 15,
-*/
 
 // increment vote for a choice
 app.put('/vote', (req, res) => {

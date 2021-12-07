@@ -28,7 +28,7 @@ const decision = require('./connect.js');
 
 module.exports = {
   getAllDecisions: () => {
-    return decision.find({});
+    return decision.find({}).limit(5);
   },
 
   getLatestDecision: () => {
