@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const localhost = axios.create({ baseURL: 'http://localhost:3002' });
+const localhost = axios.create({ baseURL: 'http://18.189.143.16' });
 
 const getPreviousDecisions = () => {
   return localhost.get('/decisions');

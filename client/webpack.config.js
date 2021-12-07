@@ -35,5 +35,6 @@ module.exports = {
       directory: './dist',
     },
     port: 8000,
+    allowedHosts: ['.amazonaws.com'],
   },
 };
